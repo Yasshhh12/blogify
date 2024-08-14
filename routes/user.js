@@ -5,12 +5,23 @@ const router = Router();
 
 router.get("/signin",(req,res)=>{
     return res.render('signin');
+    
 });
 
 
 router.get("/signup",(req,res)=>{
     return res.render('signup');
+
 });
+
+router.post('/signin',async(req,res)=>{
+    const {email,password} = req.body;
+    const user = await User.matchPassword(email,password);
+
+    console.log('User',user);
+    return 
+
+})
 
 router.post('/signup',async(req,res)=>{
     const {name,email,password} = req.body;
@@ -20,8 +31,8 @@ router.post('/signup',async(req,res)=>{
         email,
         password,
     });
-
-    return res.redirect('/');
+    res.redirect('/');
+    
 })
 
 
