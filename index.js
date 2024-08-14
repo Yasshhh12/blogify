@@ -2,7 +2,7 @@ const path = require('path');
 const userRoute = require('./routes/user');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/blogify').then(e=>console.log('MongoDB connected'));
+mongoose.connect('mongodb://127.0.0.1:27017/blog').then(e=>console.log('MongoDB connected'));
 
 const express = require('express');
 const app = express();
