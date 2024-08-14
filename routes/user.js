@@ -19,7 +19,7 @@ router.post('/signin',async(req,res)=>{
     const user = await User.matchPassword(email,password);
 
     console.log('User',user);
-    return 
+    return res.redirect('/');
 
 })
 
