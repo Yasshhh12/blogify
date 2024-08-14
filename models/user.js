@@ -10,7 +10,7 @@ const userSchema = new Schema({
     email:{
         type:String,
         required: true,
-        unique:true,
+        // unique:true,
     },
     salt:{
         type:String,
@@ -28,7 +28,8 @@ const userSchema = new Schema({
         enum:['USER','ADMIN'],
         default:'USER'
     }
-},{timestamps:true})
+},{timestamps:true});
+
 
 userSchema.pre('save',function(next){
     const user = this;
@@ -44,10 +45,10 @@ userSchema.pre('save',function(next){
     next();
 })
 
-userSchema.static("matchPassword",function(email,password){
-    const user = this.findOne({email});
+userSchema.static("matchPassword",async function(email,password){
+    const user = await this.findOne({email});
     if(!user) throw new Error('User not found!');
-
+    console.log(user);
     const salt = user.salt;
     const hashedPassword = user.password;
 
@@ -57,7 +58,7 @@ userSchema.static("matchPassword",function(email,password){
 
     if(hashedPassword!==userProvidedHash) throw new Error('Incorrect Password');
 
-    return {...user,password:undefined,salt:undefined};
+    return user;
 })
 
 const User = model("user",userSchema);
